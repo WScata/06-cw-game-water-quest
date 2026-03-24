@@ -1,0 +1,246 @@
+/* Charity: water Brand Colors & Fonts
+
+Primary Colors:
+- Yellow:     #FFC907
+- Blue:       #2E9DF7
+
+Secondary Colors:
+- Light Blue: #8BD1CB
+- Green:      #4FCB53
+- Orange:     #FF902A
+- Red:        #F5402C
+- Dark Green: #159A48
+- Pink:       #F16061
+
+Fonts:
+- Proxima Nova
+- Avenir
+
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 30px;
+  background: radial-gradient(circle at top, #FFF7E1 0%, #f9edd0 100%);
+  color: #2d3a40;
+}
+
+.container {
+  max-width: 750px;
+  margin: 50px auto;
+  background-color: #fffdf6;
+  padding: 40px;
+  border-radius: 14px;
+  border: 3px solid #77A8BB;
+  box-shadow: 0 8px 24px rgba(119, 168, 187, 0.25);
+}
+
+h1 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #2f6f88;
+  text-shadow: 0 2px 0 #FFF7E1;
+}
+
+h1 img {
+  height: 50px;
+  margin-right: 15px;
+  display: block;
+}
+
+.game-instructions {
+  font-size: 18px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #355564;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, #77A8BB 0%, #90c0d2 100%);
+  padding: 15px 0;
+  border-radius: 8px;
+  border: 2px solid #5a90a6;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.grid-cell {
+  background-color: #FFF7E1;
+  border: 2px solid #77A8BB;
+  border-radius: 8px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.water-can-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  /* Ensure the wrapper is properly centered */
+}
+
+.water-can {
+  width: 100%;
+  height: 100%;
+  background-image: url('img/water-can.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  border-radius: 50%;
+  animation: popUp 0.5s cubic-bezier(0.17, 0.67, 0.34, 2);
+  transform-origin: center; /* Ensure scaling happens from the center */
+}
+
+.obstacle-icon {
+  width: 100%;
+  height: 100%;
+  border: 5px solid #2f6f88;
+  border-radius: 12px;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(119, 168, 187, 0.2) 0,
+    rgba(119, 168, 187, 0.2) 8px,
+    rgba(255, 247, 225, 0.9) 8px,
+    rgba(255, 247, 225, 0.9) 16px
+  );
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  animation: popUp 0.5s cubic-bezier(0.17, 0.67, 0.34, 2);
+  transform-origin: center;
+}
+
+.water-can.hit-flash {
+  animation: canHitFlash 0.24s ease-out;
+}
+
+.obstacle-icon.hit-flash {
+  animation: obstacleHitFlash 0.24s ease-out;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0.5); /* Start scaling from the center */
+  }
+  100% {
+    transform: scale(1); /* End scaling at full size */
+  }
+}
+
+@keyframes canHitFlash {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  45% {
+    transform: scale(1.12);
+    filter: brightness(1.8);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes obstacleHitFlash {
+  0% {
+    transform: scale(1);
+    filter: saturate(1);
+  }
+  45% {
+    transform: scale(0.9);
+    filter: saturate(1.8);
+  }
+  100% {
+    transform: scale(1);
+    filter: saturate(1);
+  }
+}
+
+
+button {
+  background-color: #FFC907;
+  color: #224e5f;
+  font-weight: 700;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 30px auto 0;
+  transition: transform 0.15s, background-color 0.2s;
+}
+
+button:hover {
+  background-color: #ffd73f;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background-color: #d5c98e;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#restart-game {
+  background-color: #77A8BB;
+  color: #fff;
+  margin-top: 12px;
+}
+
+#restart-game:hover {
+  background-color: #6699ad;
+}
+
+#restart-game:disabled {
+  background-color: #8ea9b4;
+}
+
+.hidden {
+  display: none;
+}
+
+.achievement {
+  min-height: 28px;
+  margin: 10px 0 20px;
+  text-align: center;
+  font-weight: 700;
+  color: #2f6f88;
+  background-color: #FFF7E1;
+  border: 2px dashed #FFC907;
+  border-radius: 8px;
+  padding: 10px;
+}
