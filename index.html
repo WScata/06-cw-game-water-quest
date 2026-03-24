@@ -10,6 +10,14 @@
   <div class="container">
     <h1>Water Quest</h1>
     <p class="game-instructions">Collect 20 items to complete the game!</p>
+    <div class="controls">
+      <label for="difficulty-select">Difficulty:</label>
+      <select id="difficulty-select">
+        <option value="easy">Easy</option>
+        <option value="normal" selected>Normal</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
     <div class="stats">
       <p>Cans Collected: <span id="current-cans">0</span></p>
       <p>Time Left: <span id="timer">30</span>s</p>

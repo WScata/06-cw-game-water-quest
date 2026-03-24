@@ -62,6 +62,43 @@ h1 img {
   color: #355564;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.controls label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2f6f88;
+}
+
+#difficulty-select {
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: #2f6f88;
+  border: 2px solid #77A8BB;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  font-weight: 500;
+}
+
+#difficulty-select:hover {
+  border-color: #5a90a6;
+  background-color: #f5f9fc;
+}
+
+#difficulty-select:focus {
+  outline: none;
+  border-color: #2E9DF7;
+  box-shadow: 0 0 0 3px rgba(46, 157, 247, 0.1);
+}
+
 .stats {
   display: flex;
   justify-content: space-around;

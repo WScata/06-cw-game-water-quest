@@ -1,6 +1,5 @@
 // Game configuration and state variables
 const WIN_SCORE = 20;
-const GAME_DURATION = 30;
 const winningMessages = [
   'Amazing work! You hit your water goal!',
   'You won! Every can counts toward clean water!',
@@ -14,17 +13,26 @@ const losingMessages = [
   'Keep practicing, you can beat 20 next round!'
 ];
 
+// Difficulty settings: spawn interval in milliseconds and game duration in seconds
+const DIFFICULTY_SETTINGS = {
+  easy: { spawn: 1200, duration: 45 },
+  normal: { spawn: 1000, duration: 30 },
+  hard: { spawn: 800, duration: 20 }
+};
+
 let currentCans = 0;
-let timeLeft = GAME_DURATION;
+let timeLeft = 30;
 let gameActive = false;
 let spawnInterval;
 let timerInterval;
+let currentDifficulty = 'normal';
 
 const scoreEl = document.getElementById('current-cans');
 const timerEl = document.getElementById('timer');
 const achievementsEl = document.getElementById('achievements');
 const startButton = document.getElementById('start-game');
 const restartButton = document.getElementById('restart-game');
+const difficultySelect = document.getElementById('difficulty-select');
 
 // Creates the 3x3 game grid where items will appear
 function createGrid() {
@@ -55,7 +63,7 @@ createGrid();
 
 function startRound() {
   currentCans = 0;
-  timeLeft = GAME_DURATION;
+  timeLeft = DIFFICULTY_SETTINGS[currentDifficulty].duration;
   achievementsEl.textContent = '';
 
   clearInterval(spawnInterval);
@@ -66,7 +74,8 @@ function startRound() {
   updateTimerDisplay();
   spawnWaterCan();
 
-  spawnInterval = setInterval(spawnWaterCan, 1000);
+  const spawnRate = DIFFICULTY_SETTINGS[currentDifficulty].spawn;
+  spawnInterval = setInterval(spawnWaterCan, spawnRate);
   timerInterval = setInterval(() => {
     timeLeft -= 1;
     updateTimerDisplay();
@@ -170,6 +179,18 @@ function endGame() {
   restartButton.classList.add('hidden');
 }
 
-// Set up click handler for the start button
+// Set up click handlers for the start and restart buttons
 startButton.addEventListener('click', startGame);
 restartButton.addEventListener('click', restartGame);
+
+// Set up change handler for the difficulty selector
+difficultySelect.addEventListener('change', (e) => {
+  currentDifficulty = e.target.value;
+  
+  // If game is active, update the spawn interval immediately
+  if (gameActive) {
+    clearInterval(spawnInterval);
+    const spawnRate = DIFFICULTY_SETTINGS[currentDifficulty];
+    spawnInterval = setInterval(spawnWaterCan, spawnRate);
+  }
+});
