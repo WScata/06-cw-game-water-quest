@@ -12,6 +12,12 @@ const losingMessages = [
   'So close! Give it another shot!',
   'Keep practicing, you can beat 20 next round!'
 ];
+const milestoneMessages = [
+  { score: 5, message: 'Great start!' },
+  { score: 10, message: 'Halfway there!' },
+  { score: 15, message: 'Almost at your goal!' },
+  { score: 20, message: 'Goal reached! Keep going!' }
+];
 
 // Difficulty settings: spawn interval in milliseconds and game duration in seconds
 const DIFFICULTY_SETTINGS = {
@@ -26,6 +32,7 @@ let gameActive = false;
 let spawnInterval;
 let timerInterval;
 let currentDifficulty = 'normal';
+let shownMilestones = new Set();
 
 const scoreEl = document.getElementById('current-cans');
 const timerEl = document.getElementById('timer');
@@ -58,12 +65,22 @@ function clearBoard() {
   cells.forEach(cell => (cell.innerHTML = ''));
 }
 
+function checkMilestones() {
+  milestoneMessages.forEach(milestone => {
+    if (currentCans >= milestone.score && !shownMilestones.has(milestone.score)) {
+      achievementsEl.textContent = milestone.message;
+      shownMilestones.add(milestone.score);
+    }
+  });
+}
+
 // Ensure the grid is created when the page loads
 createGrid();
 
 function startRound() {
   currentCans = 0;
   timeLeft = DIFFICULTY_SETTINGS[currentDifficulty].duration;
+  shownMilestones = new Set();
   achievementsEl.textContent = '';
 
   clearInterval(spawnInterval);
@@ -110,6 +127,7 @@ function spawnWaterCan() {
 
     currentCans += 1;
     updateScoreDisplay();
+    checkMilestones();
     can.classList.add('hit-flash');
     can.style.pointerEvents = 'none';
 
@@ -117,7 +135,7 @@ function spawnWaterCan() {
       if (gameActive) {
         randomCell.innerHTML = '';
       }
-    }, 240);
+    }, 500);
   }, { once: true });
 
   const emptyCells = Array.from(cells).filter(cell => cell.innerHTML === '');
@@ -144,7 +162,7 @@ function spawnWaterCan() {
       if (gameActive) {
         obstacleCell.innerHTML = '';
       }
-    }, 240);
+    }, 400);
   });
 }
 
@@ -190,7 +208,7 @@ difficultySelect.addEventListener('change', (e) => {
   // If game is active, update the spawn interval immediately
   if (gameActive) {
     clearInterval(spawnInterval);
-    const spawnRate = DIFFICULTY_SETTINGS[currentDifficulty];
+    const spawnRate = DIFFICULTY_SETTINGS[currentDifficulty].spawn;
     spawnInterval = setInterval(spawnWaterCan, spawnRate);
   }
 });

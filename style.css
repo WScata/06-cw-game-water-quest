@@ -23,11 +23,18 @@ Fonts:
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Avenir, 'Avenir Next', 'Segoe UI', sans-serif;
   margin: 0;
   padding: 30px;
   background: radial-gradient(circle at top, #FFF7E1 0%, #f9edd0 100%);
   color: #2d3a40;
+}
+
+button,
+select,
+input,
+textarea {
+  font: inherit;
 }
 
 .container {
@@ -180,11 +187,11 @@ h1 img {
 }
 
 .water-can.hit-flash {
-  animation: canHitFlash 0.24s ease-out;
+  animation: canHitFlash 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .obstacle-icon.hit-flash {
-  animation: obstacleHitFlash 0.24s ease-out;
+  animation: obstacleHitFlash 0.4s ease-in-out;
 }
 
 @keyframes popUp {
@@ -198,30 +205,42 @@ h1 img {
 
 @keyframes canHitFlash {
   0% {
-    transform: scale(1);
+    transform: translateY(0) scale(1);
     filter: brightness(1);
   }
-  45% {
-    transform: scale(1.12);
-    filter: brightness(1.8);
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    filter: brightness(1.3);
   }
   100% {
-    transform: scale(1);
+    transform: translateY(0) scale(1);
     filter: brightness(1);
   }
 }
 
 @keyframes obstacleHitFlash {
-  0% {
-    transform: scale(1);
+  0%, 100% {
+    transform: translateX(0);
     filter: saturate(1);
   }
-  45% {
-    transform: scale(0.9);
-    filter: saturate(1.8);
+  10% {
+    transform: translateX(-8px);
+    filter: saturate(1.5);
   }
-  100% {
-    transform: scale(1);
+  20% {
+    transform: translateX(8px);
+    filter: saturate(1.5);
+  }
+  30% {
+    transform: translateX(-8px);
+    filter: saturate(1.5);
+  }
+  40% {
+    transform: translateX(8px);
+    filter: saturate(1.5);
+  }
+  50% {
+    transform: translateX(0);
     filter: saturate(1);
   }
 }
@@ -280,4 +299,33 @@ button:disabled {
   border: 2px dashed #FFC907;
   border-radius: 8px;
   padding: 10px;
+}
+
+.footer {
+  max-width: 750px;
+  margin: 30px auto;
+  background-color: #fffdf6;
+  padding: 20px;
+  border-radius: 14px;
+  border: 3px solid #77A8BB;
+  box-shadow: 0 8px 24px rgba(119, 168, 187, 0.25);
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #2f6f88;
+}
+
+.footer a {
+  color: #2E9DF7;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: #2f6f88;
+  text-decoration: underline;
 }
